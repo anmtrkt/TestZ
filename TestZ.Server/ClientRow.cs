@@ -17,7 +17,6 @@ public sealed class ClientRow : INotifyPropertyChanged
     private string _domain = "";
     private string _machine = "";
     private string _user = "";
-    private string _osVersion = "";
     private string _ip = "";
     private DateTime _lastSeen;
     private int _idleSeconds;
