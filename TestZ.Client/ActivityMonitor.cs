@@ -11,8 +11,8 @@ public static class ActivityMonitor
 
         if (!WinApi.GetLastInputInfo(ref info))
             return 0; 
-
-        long idleMs = Environment.TickCount64 - info.DwTime;
-        return (int)Math.Max(0, idleMs / 1000);
+        uint now = unchecked((uint)Environment.TickCount);
+        uint idleMs = unchecked(now - info.DwTime);
+        return (int)(idleMs / 1000);
     }
 }

@@ -8,7 +8,7 @@ public enum ClientStatus
     Online,
 
     Away,
-    
+
     Offline,
 }
 
@@ -28,13 +28,18 @@ public sealed class ClientRow : INotifyPropertyChanged
     public string Domain { get => _domain; private set => Set(ref _domain, value); }
     public string Machine { get => _machine; private set => Set(ref _machine, value); }
     public string User { get => _user; private set => Set(ref _user, value); }
-    public string OsVersion { get => _osVersion; private set => Set(ref _osVersion, value); }
-
     public string Ip { get => _ip; private set => Set(ref _ip, value); }
+public DateTime LastSeen { get => _lastSeen; private set => Set(ref _lastSeen, value); }
 
-    public DateTime LastSeen { get => _lastSeen; private set => Set(ref _lastSeen, value); }
-
-    public int IdleSeconds { get => _idleSeconds; private set => Set(ref _idleSeconds, value); }
+    public int IdleSeconds
+    {
+        get => _idleSeconds;
+        private set
+        {
+            if (Set(ref _idleSeconds, value))
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IdleText)));
+        }
+    }
 
     public ClientStatus Status
     {
@@ -43,19 +48,19 @@ public sealed class ClientRow : INotifyPropertyChanged
         {
             if (Set(ref _status, value))
             {
-                
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOnline)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IdleText)));
             }
         }
     }
+
     public string Key => $"{Machine}\\{User}";
 
     public bool IsOnline => Status != ClientStatus.Offline;
-
     public string IdleText => Status == ClientStatus.Offline
         ? "—"
-        : IdleSeconds < 60 ? $"{IdleSeconds} с" : $"{IdleSeconds / 60} min";
+        : IdleSeconds < 60 ? $"{IdleSeconds} с" : $"{IdleSeconds / 60} мин";
+
 
     internal void ApplyHello(string domain, string machine, string user,
         string ip, Guid sessionId)
@@ -78,9 +83,7 @@ public sealed class ClientRow : INotifyPropertyChanged
 
     internal void ApplyOffline() => Status = ClientStatus.Offline;
 
-   
     public event PropertyChangedEventHandler? PropertyChanged;
-
     private bool Set<T>(ref T field, T value, [CallerMemberName] string? name = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value))
