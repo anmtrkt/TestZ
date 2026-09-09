@@ -4,8 +4,8 @@ C# / .NET 10 (WPF), сторонних пакетов нет, только BCL �
 Нужен Windows и .NET 10 SDK.
 
 dotnet build TestZ.slnx
-dotnet run --project TestZ.Server # терминал 1 — сервер
-dotnet run --project TestZ.Client# терминал 2 — клиент
+dotnet run --project TestZ.Server : терминал 1 — сервер
+dotnet run --project TestZ.Client : терминал 2 — клиент
 
 Настройки
 Обычные константы в исходниках, после правки необходима пересборка проекта.
