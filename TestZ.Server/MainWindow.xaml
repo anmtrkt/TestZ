@@ -1,0 +1,51 @@
+﻿<Window x:Class="TestZ.Server.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Operators panel"
+        Height="480" Width="960" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Margin="0,0,0,8" TextWrapping="Wrap"
+                   Text="Connected clients" />
+
+        <DataGrid Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding Clients}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80" />
+                <DataGridTextColumn Header="Domen" Binding="{Binding Domain}" Width="90" />
+                <DataGridTextColumn Header="Comp" Binding="{Binding Machine}" Width="110" />
+                <DataGridTextColumn Header="User" Binding="{Binding User}" Width="110" />
+                <DataGridTextColumn Header="IP" Binding="{Binding Ip}" Width="110" />
+                <DataGridTextColumn Header="Last seen"
+                                    Binding="{Binding LastSeen, StringFormat=HH:mm:ss}" Width="120" />
+                <DataGridTextColumn Header="Idle" Binding="{Binding IdleText}" Width="130" />
+                <DataGridTemplateColumn Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Screenshot" Padding="4,1"
+                                    Command="{Binding DataContext.ScreenshotCommand,
+                                              RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock Text="Port 4545 awaiting connections…" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

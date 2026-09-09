@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="TestZ.Client/TestZ.Client.csproj" Id="74750551-c229-449b-9a2b-7855b2e8a304" />
+  <Project Path="TestZ.Common/TestZ.Common.csproj" Id="67764bb0-375c-4eb3-9757-332d1e7d4609" />
+  <Project Path="TestZ.Server/TestZ.Server.csproj" Id="22553ef5-350d-49cb-b6b4-6109655a5b8b" />
+</Solution>
